@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALinq", "ALinq\ALinq.csproj", "{86C1DE8E-A78B-4F41-9818-7D62814A1314}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{20FE8F50-53F4-40C9-B980-E698FC0C98B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALinq.Tests", "ALinq.Tests\ALinq.Tests.csproj", "{27A7F4F2-501C-4042-BACE-88AC8ED78AB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86C1DE8E-A78B-4F41-9818-7D62814A1314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86C1DE8E-A78B-4F41-9818-7D62814A1314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86C1DE8E-A78B-4F41-9818-7D62814A1314}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86C1DE8E-A78B-4F41-9818-7D62814A1314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27A7F4F2-501C-4042-BACE-88AC8ED78AB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A7F4F2-501C-4042-BACE-88AC8ED78AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27A7F4F2-501C-4042-BACE-88AC8ED78AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27A7F4F2-501C-4042-BACE-88AC8ED78AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{27A7F4F2-501C-4042-BACE-88AC8ED78AB5} = {20FE8F50-53F4-40C9-B980-E698FC0C98B6}
+	EndGlobalSection
+EndGlobal
