@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncEnumerable.Evaluation.cs" />
     <Compile Include="AsyncEnumerable.Misc.cs" />
     <Compile Include="AsyncEnumerable.Select.cs" />
     <Compile Include="AsyncEnumerable.ForEach.cs" />

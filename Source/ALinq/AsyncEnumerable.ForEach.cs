@@ -59,12 +59,7 @@ namespace ALinq
             }
             finally
             {
-                var enumeratorDisposable = enumerator as IDisposable;
-
-                if (enumeratorDisposable != null)
-                {
-                    enumeratorDisposable.Dispose();
-                }
+                enumerator.Dispose();
             }
         }
     }

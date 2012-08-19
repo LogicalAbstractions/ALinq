@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ALinq</id>
+    <version>0.1.0</version>
+    <authors>Bernhard Glück</authors>
+    <owners>Bernhard Glück</owners>
+    <projectUrl>https://github.com/BernhardGlueck/ALinq</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Asynchronous Linq to Object support</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright by Bernhard Glück 2012</copyright>
+    <tags>C#,NET,LINQ,async</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>
