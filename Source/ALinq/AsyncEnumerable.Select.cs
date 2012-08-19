@@ -23,5 +23,26 @@ namespace ALinq
                 });
             });
         }
+
+        public static IAsyncEnumerable<TOut> SelectMany<TIn,TOut>(this IAsyncEnumerable<TIn> enumerable,Func<TIn,Task<IAsyncEnumerable<TOut>>> selector)
+        {
+            if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if (selector == null) throw new ArgumentNullException("selector");
+
+            return Create<TOut>(async producer =>
+            {
+                await enumerable.ForEach(async (TIn item, long index) =>
+                {
+                    var innerEnumerable = await selector(item);
+                    if ( innerEnumerable != null )
+                    {
+                        await innerEnumerable.ForEach(async (TOut innerItem, long innerIndex) =>
+                        {
+                            await producer.Yield(innerItem);
+                        });
+                    }
+                });
+            });
+        }
     }
 }

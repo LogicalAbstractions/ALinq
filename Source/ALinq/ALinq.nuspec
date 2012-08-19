@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/BernhardGlueck/ALinq</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>0.1 Alpha initial release</releaseNotes>
+    <copyright>Copyright 2012 by Bernhard Glueck</copyright>
+    <tags>C# LINQ Async Asynchronous</tags>
+  </metadata>
+</package>
