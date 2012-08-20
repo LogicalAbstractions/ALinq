@@ -51,7 +51,7 @@
     <Compile Include="ConcurrentAsyncEnumerable.cs" />
     <Compile Include="ConcurrentAsyncEnumerator.cs" />
     <Compile Include="ConcurrentAsyncProducer.cs" />
-    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="ConversionObserver.cs" />
     <Compile Include="IAsyncEnumerable.cs" />
     <Compile Include="IAsyncEnumerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
