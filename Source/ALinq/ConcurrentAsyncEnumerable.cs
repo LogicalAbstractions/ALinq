@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace ALinq
 {
-    public sealed class ConcurrentAsyncEnumerable<T> : IAsyncEnumerable<T>
+    internal sealed class ConcurrentAsyncEnumerable<T> : IAsyncEnumerable<T>
     {
         private readonly Func<ConcurrentAsyncProducer<T>, Task> producerFunc;
 
@@ -17,7 +17,7 @@ namespace ALinq
             return new ConcurrentAsyncEnumerator<T>(producerFunc);
         }
 
-        public ConcurrentAsyncEnumerable(Func<ConcurrentAsyncProducer<T>, Task> producerFunc)
+        internal ConcurrentAsyncEnumerable(Func<ConcurrentAsyncProducer<T>, Task> producerFunc)
         {
             if (producerFunc == null) throw new ArgumentNullException("producerFunc");
             this.producerFunc = producerFunc;

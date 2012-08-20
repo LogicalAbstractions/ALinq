@@ -28,44 +28,228 @@ namespace ALinq
 
         public static async Task<T> First<T>(this IAsyncEnumerable<T> enumerable)
         {
+#pragma warning disable 1998
+            return await First<T>(enumerable, async item => true);
+#pragma warning restore 1998
+        }
+
+        public static async Task<T> First<T>(this IAsyncEnumerable<T> enumerable,Func<T,Task<bool>> predicate)
+        {
             if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if (predicate == null) throw new ArgumentNullException("predicate");
 
-            var enumerator = enumerable.GetEnumerator();
+            var result  = default(T);
+            var found   = false;
 
-            try
+            await enumerable.ForEach(async item =>
             {
-                if ( await enumerator.MoveNext())
+                if ( await predicate(item))
                 {
-                    return enumerator.Current;
+                    found = true;
+                    result = item;
                 }
-            }
-            finally 
+            });
+
+            if ( found )
             {
-                enumerator.Dispose();  
+                return result;
             }
 
-            throw new InvalidOperationException("Sequence contains no elements");
+            throw new InvalidOperationException("Sequence contains no matching element");
         }
 
         public static async Task<T> FirstOrDefault<T>(this IAsyncEnumerable<T> enumerable)
         {
+#pragma warning disable 1998
+            return await FirstOrDefault<T>(enumerable, async item => true);
+#pragma warning restore 1998
+        }
+
+        public static async Task<T> FirstOrDefault<T>(this IAsyncEnumerable<T> enumerable,Func<T,Task<bool>> predicate)
+        {
             if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if (predicate == null) throw new ArgumentNullException("predicate");
 
-            var enumerator = enumerable.GetEnumerator();
+            var result = default(T);
+            var found = false;
 
-            try
+            await enumerable.ForEach(async item =>
             {
-                if (await enumerator.MoveNext())
+                if (await predicate(item))
                 {
-                    return enumerator.Current;
+                    found = true;
+                    result = item;
                 }
-            }
-            finally
+            });
+
+            if (found)
             {
-                enumerator.Dispose();
+                return result;
             }
 
             return default(T);
+        }
+
+        public static IAsyncEnumerable<T> DefaultIfEmpty<T>(this IAsyncEnumerable<T> enumerable)
+        {
+            return DefaultIfEmpty<T>(enumerable, default(T));
+        }
+
+        public static IAsyncEnumerable<T> DefaultIfEmpty<T>(this IAsyncEnumerable<T> enumerable,T defaultValue)
+        {
+            return Create<T>(async producer =>
+            {
+                var atLeastOne = false;
+
+                await enumerable.ForEach(async item =>
+                {
+                    atLeastOne = true;
+                    await producer.Yield(item);
+                });
+
+                if ( !atLeastOne )
+                {
+                    await producer.Yield(defaultValue);
+                }
+            });
+        }
+
+        public static Task<int> Count<T>(this IAsyncEnumerable<T> enumerable)
+        {
+#pragma warning disable 1998
+            return Count<T>(enumerable, async item => true);
+#pragma warning restore 1998
+        }
+
+        public static async Task<int> Count<T>(this IAsyncEnumerable<T> enumerable,Func<T,Task<bool>> selector)
+        {
+            if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if (selector == null) throw new ArgumentNullException("selector");
+
+            var counter = 0;
+#pragma warning disable 1998
+            await enumerable.Where(selector).ForEach(async (T item) =>
+#pragma warning restore 1998
+            {
+                counter++;
+            });
+
+            return counter;
+        }
+
+        public static Task<long> LongCount<T>(this IAsyncEnumerable<T> enumerable)
+        {
+#pragma warning disable 1998
+            return LongCount<T>(enumerable, async item => true);
+#pragma warning restore 1998
+        }
+
+        public static async Task<long> LongCount<T>(this IAsyncEnumerable<T> enumerable, Func<T, Task<bool>> selector)
+        {
+            if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if (selector == null) throw new ArgumentNullException("selector");
+
+            var counter = 0L;
+#pragma warning disable 1998
+            await enumerable.Where(selector).ForEach(async (T item) =>
+#pragma warning restore 1998
+            {
+                counter++;
+            });
+
+            return counter;
+        }
+
+        public static async Task<T> ElementAtOrDefault<T>(this IAsyncEnumerable<T> enumerable,int index)
+        {
+            if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if (index < 0) throw new ArgumentOutOfRangeException("index", "index must be zero or greater");
+
+            var result = default(T);
+            var found = false;
+
+#pragma warning disable 1998
+            await enumerable.ForEach(async state =>
+#pragma warning restore 1998
+            {
+                if (state.Index == index)
+                {
+                    result = state.Item;
+                    found = true;
+                }
+            });
+
+            if (found)
+            {
+                return result;
+            }
+
+            return default(T);
+        }
+
+        public static async Task<T> ElementAt<T>(this IAsyncEnumerable<T> enumerable,int index)
+        {
+            if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if (index < 0 ) throw new ArgumentOutOfRangeException("index","index must be zero or greater");
+
+            var result = default(T);
+            var found  = false;
+
+#pragma warning disable 1998
+            await enumerable.ForEach(async state =>
+#pragma warning restore 1998
+            {
+                if ( state.Index == index)
+                {
+                    result = state.Item;
+                    found = true;
+                }
+            });
+
+            if ( found )
+            {
+                return result;
+            }
+
+            throw new InvalidOperationException(string.Format("Sequence is smaller than the given index: {0}",index));
+        }
+
+        public static IAsyncEnumerable<T> Skip<T>(this IAsyncEnumerable<T> enumerable,int count)
+        {
+            if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if ( count < 0 ) throw new ArgumentOutOfRangeException("count","count must be zero or greater");
+
+            return Create<T>(async producer =>
+            {
+                await enumerable.ForEach(async state =>
+                {
+                    if ( state.Index >= count )
+                    {
+                        await producer.Yield(state.Item);
+                    }
+                });
+            });
+        }
+
+        public static IAsyncEnumerable<T> Take<T>(this IAsyncEnumerable<T> enumerable,int count)
+        {
+            if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if (count < 0) throw new ArgumentOutOfRangeException("count", "count must be zero or greater");
+
+            var counter = 0;
+
+            return Create<T>(async producer =>
+            {
+                await enumerable.ForEach(async state =>
+                {
+                    if (counter < count)
+                    {
+                        await producer.Yield(state.Item);
+                    }
+
+                    counter++;
+                });
+            });
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ALinq.Tests
         {
             var sequence = AsyncEnumerable.Range(0, 100);
 
-         
+
         }
     }
 }

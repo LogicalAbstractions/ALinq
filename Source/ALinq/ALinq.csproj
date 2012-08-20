@@ -35,9 +35,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncEnumerable.Conversion.cs" />
+    <Compile Include="AsyncEnumerable.Aggregation.cs" />
+    <Compile Include="AsyncEnumerable.Joins.cs" />
     <Compile Include="AsyncEnumerable.Order.cs" />
     <Compile Include="AsyncEnumerable.Distinct.cs" />
-    <Compile Include="AsyncEnumerable.Where.cs" />
+    <Compile Include="AsyncEnumerable.Filter.cs" />
     <Compile Include="AsyncEnumerable.Evaluation.cs" />
     <Compile Include="AsyncEnumerable.Misc.cs" />
     <Compile Include="AsyncEnumerable.Select.cs" />

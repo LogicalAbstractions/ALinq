@@ -41,5 +41,23 @@ namespace ALinq
                 }
             });
         }
+
+        public static IAsyncEnumerable<T> Reverse<T>(this IAsyncEnumerable<T> enumerable)
+        {
+            if (enumerable == null) throw new ArgumentNullException("enumerable");
+
+            return Create<T>(async producer =>
+            {
+                var evaluatedSequence = new List<T>();
+#pragma warning disable 1998
+                await enumerable.ForEach(async item => evaluatedSequence.Add(item));
+#pragma warning restore 1998
+
+                foreach( var item in ((IEnumerable<T>)evaluatedSequence).Reverse())
+                {
+                    await producer.Yield(item);
+                }
+            });
+        }
     }
 }
