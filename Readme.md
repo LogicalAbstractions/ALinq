@@ -18,8 +18,6 @@ Missing LINQ operators:
  - SelectMany overloads
  - Single
  - SingleOrDefault
- - SkipWhile
- - TakeWhile
  - ThenBy
  - ThenByDescending
  - ToDictionary
