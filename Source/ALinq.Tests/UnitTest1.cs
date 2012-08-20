@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ALinq.Tests
@@ -7,8 +8,11 @@ namespace ALinq.Tests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public async Task TestMethod1()
         {
+            var sequence = AsyncEnumerable.Range(0, 100);
+
+         
         }
     }
 }

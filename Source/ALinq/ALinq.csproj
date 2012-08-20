@@ -34,6 +34,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncEnumerable.Conversion.cs" />
+    <Compile Include="AsyncEnumerable.Order.cs" />
     <Compile Include="AsyncEnumerable.Distinct.cs" />
     <Compile Include="AsyncEnumerable.Where.cs" />
     <Compile Include="AsyncEnumerable.Evaluation.cs" />
@@ -51,6 +53,7 @@
     <Compile Include="IAsyncEnumerable.cs" />
     <Compile Include="IAsyncEnumerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReverseComparer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
