@@ -8,7 +8,7 @@ namespace ALinq
         public static async Task<bool> Any<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
-            return await Any<T>(enumerable, async item => true);
+            return await Any(enumerable, async item => true);
 #pragma warning restore 1998
         }
 

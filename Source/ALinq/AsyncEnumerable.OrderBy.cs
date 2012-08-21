@@ -10,17 +10,17 @@ namespace ALinq
     {
         public static IAsyncEnumerable<TValue> OrderByDescending<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector)
         {
-            return OrderByDescending<TKey, TValue>(enumerable, keySelector, Comparer<TKey>.Default);
+            return OrderByDescending(enumerable, keySelector, Comparer<TKey>.Default);
         }
 
         public static IAsyncEnumerable<TValue> OrderByDescending<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector,IComparer<TKey> comparer)
         {
-            return OrderBy<TKey,TValue>(enumerable, keySelector, new ReverseComparer<TKey>(comparer));
+            return OrderBy(enumerable, keySelector, new ReverseComparer<TKey>(comparer));
         }
 
         public static IAsyncEnumerable<TValue> OrderBy<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector)
         {
-            return OrderBy<TKey,TValue>(enumerable, keySelector, Comparer<TKey>.Default);
+            return OrderBy(enumerable, keySelector, Comparer<TKey>.Default);
         }
 
         public static IAsyncEnumerable<TValue> OrderBy<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector,IComparer<TKey> comparer)
@@ -38,24 +38,6 @@ namespace ALinq
                 foreach( var item in result.OrderBy(pair => pair.Key,comparer))
                 {
                     await producer.Yield(item.Value);
-                }
-            });
-        }
-
-        public static IAsyncEnumerable<T> Reverse<T>(this IAsyncEnumerable<T> enumerable)
-        {
-            if (enumerable == null) throw new ArgumentNullException("enumerable");
-
-            return Create<T>(async producer =>
-            {
-                var evaluatedSequence = new List<T>();
-#pragma warning disable 1998
-                await enumerable.ForEach(async item => evaluatedSequence.Add(item));
-#pragma warning restore 1998
-
-                foreach( var item in ((IEnumerable<T>)evaluatedSequence).Reverse())
-                {
-                    await producer.Yield(item);
                 }
             });
         }
