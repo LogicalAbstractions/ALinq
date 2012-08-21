@@ -84,6 +84,7 @@
     <Compile Include="AsyncEnumerable.ToArray.cs" />
     <Compile Include="AsyncEnumerable.ToDictionary.cs" />
     <Compile Include="AsyncEnumerable.GroupBy.cs" />
+    <Compile Include="AsyncEnumerable.GroupJoin.cs" />
     <Compile Include="IAsyncEnumerable.cs" />
     <Compile Include="IAsyncEnumerator.cs" />
     <Compile Include="IAsyncGrouping.cs" />
