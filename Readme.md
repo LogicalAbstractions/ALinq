@@ -5,13 +5,8 @@ being worked on and in flux, and quite a few operators are not implemented yet.
 
 Missing LINQ operators:
 
- - Except
  - GroupBy
  - GroupJoin
- - Intersect
- - Join
  - ThenBy
  - ThenByDescending
- - ToDictionary
  - ToLookup
- - Union

@@ -58,7 +58,7 @@
     <Compile Include="AsyncEnumerable.OrderBy.cs" />
     <Compile Include="AsyncEnumerable.Distinct.cs" />
     <Compile Include="AsyncEnumerable.Where.cs" />
-    <Compile Include="AsyncEnumerable.Evaluation.cs" />
+    <Compile Include="AsyncEnumerable.ToList.cs" />
     <Compile Include="AsyncEnumerable.ToAsync.cs" />
     <Compile Include="AsyncEnumerable.Select.cs" />
     <Compile Include="AsyncEnumerable.ForEach.cs" />
@@ -80,6 +80,8 @@
     <Compile Include="AsyncEnumerable.Empty.cs" />
     <Compile Include="AsyncEnumerable.Utilities.cs" />
     <Compile Include="AsyncEnumerable.Join.cs" />
+    <Compile Include="AsyncEnumerable.ToArray.cs" />
+    <Compile Include="AsyncEnumerable.ToDictionary.cs" />
     <Compile Include="IAsyncEnumerable.cs" />
     <Compile Include="IAsyncEnumerator.cs" />
     <Compile Include="IOrderedAsyncEnumerable.cs" />

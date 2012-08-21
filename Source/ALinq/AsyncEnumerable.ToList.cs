@@ -19,11 +19,5 @@ namespace ALinq
 
             return result;
         }
-
-        public static async Task<T[]> ToArray<T>(this IAsyncEnumerable<T> enumerable )
-        {
-            var list = await ToList(enumerable);
-            return list.ToArray();
-        }
     }
 }
