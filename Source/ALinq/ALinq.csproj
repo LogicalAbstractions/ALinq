@@ -40,6 +40,9 @@
     <Compile Include="AsyncEnumerable.Any.cs" />
     <Compile Include="AsyncEnumerable.All.cs" />
     <Compile Include="AsyncEnumerable.Contains.cs" />
+    <Compile Include="AsyncEnumerable.Union.cs" />
+    <Compile Include="AsyncEnumerable.Intersect.cs" />
+    <Compile Include="AsyncEnumerable.Except.cs" />
     <Compile Include="AsyncEnumerable.Max.cs" />
     <Compile Include="AsyncEnumerable.Min.cs" />
     <Compile Include="AsyncEnumerable.Sum.cs" />
