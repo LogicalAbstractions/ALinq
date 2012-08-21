@@ -10,9 +10,6 @@ Missing LINQ operators:
  - GroupJoin
  - Intersect
  - Join
- - Max
- - Min
- - SelectMany overloads
  - ThenBy
  - ThenByDescending
  - ToDictionary
