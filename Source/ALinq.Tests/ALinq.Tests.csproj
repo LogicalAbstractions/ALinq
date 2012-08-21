@@ -50,8 +50,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="AsyncEnumerableAllTests.cs" />
+    <Compile Include="AsyncEnumerableMinTests.cs" />
+    <Compile Include="AsyncEnumerableMaxTests.cs" />
+    <Compile Include="AsyncEnumerableSumTests.cs" />
+    <Compile Include="AsyncEnumerableTakeTests.cs" />
+    <Compile Include="AsyncEnumerableSkipTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AsyncEnumerableAggregateTests.cs" />
+    <Compile Include="AsyncEnumerableConcatTests.cs" />
+    <Compile Include="AsyncEnumerableContainsTests.cs" />
+    <Compile Include="AsyncEnumerableCountTests.cs" />
+    <Compile Include="AsyncEnumerableDistinctTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ALinq\ALinq.csproj">

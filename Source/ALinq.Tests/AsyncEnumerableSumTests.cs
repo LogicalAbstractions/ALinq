@@ -5,14 +5,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ALinq.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class AsyncEnumerableSumTests
     {
         [TestMethod]
-        public async Task TestMethod1()
+        public async Task SumShouldWork()
         {
-            var sequence = AsyncEnumerable.Range(0, 100);
-
-
+            Assert.AreEqual(45,await AsyncEnumerable.Range(0,10).Sum());
         }
     }
 }
