@@ -88,7 +88,7 @@ namespace ALinq
         {
             if (observable == null) throw new ArgumentNullException("observable");
 
-            return AsyncEnumerable.Create<T>(async producer => {
+            return Create<T>(async producer => {
             
                 using( var converter = new ConversionObserver<T>(producer))
                 {

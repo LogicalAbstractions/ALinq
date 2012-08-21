@@ -48,6 +48,8 @@
     <Compile Include="AsyncEnumerableConverter.cs" />
     <Compile Include="AsyncEnumeratorConverter.cs" />
     <Compile Include="AsyncLoopState.cs" />
+    <Compile Include="BufferedAsyncEnumerable.cs" />
+    <Compile Include="BufferedOrderedAsyncEnumerable.cs" />
     <Compile Include="ConcurrentAsyncEnumerable.cs" />
     <Compile Include="ConcurrentAsyncEnumerator.cs" />
     <Compile Include="ConcurrentAsyncProducer.cs" />
