@@ -5,12 +5,12 @@ namespace ALinq
 {
     public static partial class AsyncEnumerable
     {
-        public static Task ForEach(this IAsyncEnumerable enumerable, Func<object, AsyncLoopState<object>, Task> enumerationAction)
+        public static Task ForEach(this IAsyncEnumerable enumerable, Func<object, AsyncLoopContext<object>, Task> enumerationAction)
         {
             return ForEach(enumerable, loopState => enumerationAction(loopState.Item, loopState));
         }
 
-        public static Task ForEach(this IAsyncEnumerable enumerable, Func<object, long, AsyncLoopState<object>, Task> enumerationAction)
+        public static Task ForEach(this IAsyncEnumerable enumerable, Func<object, long, AsyncLoopContext<object>, Task> enumerationAction)
         {
             return ForEach(enumerable, loopState => enumerationAction(loopState.Item, loopState.Index, loopState));
         }
@@ -25,7 +25,7 @@ namespace ALinq
             return ForEach(enumerable, loopState => enumerationAction(loopState.Item));
         }
 
-        public static async Task ForEach(this IAsyncEnumerable enumerable, Func<AsyncLoopState<object>, Task> enumerationAction)
+        public static async Task ForEach(this IAsyncEnumerable enumerable, Func<AsyncLoopContext<object>, Task> enumerationAction)
         {
             if (enumerable == null) throw new ArgumentNullException("enumerable");
             if (enumerationAction == null) throw new ArgumentNullException("enumerationAction");
@@ -33,7 +33,7 @@ namespace ALinq
             var index = 0L;
             var doContinue = true;
             var enumerator = enumerable.GetEnumerator();
-            var loopState = new AsyncLoopState<object>();
+            var loopState = new AsyncLoopContext<object>();
 
             try
             {
@@ -63,12 +63,12 @@ namespace ALinq
             }
         }
 
-        public static Task ForEach<T>(this IAsyncEnumerable<T> enumerable, Func<T, AsyncLoopState<T>, Task> enumerationAction)
+        public static Task ForEach<T>(this IAsyncEnumerable<T> enumerable, Func<T, AsyncLoopContext<T>, Task> enumerationAction)
         {
             return ForEach(enumerable, loopState => enumerationAction(loopState.Item, loopState));
         }
 
-        public static Task ForEach<T>(this IAsyncEnumerable<T> enumerable, Func<T, long, AsyncLoopState<T>, Task> enumerationAction)
+        public static Task ForEach<T>(this IAsyncEnumerable<T> enumerable, Func<T, long, AsyncLoopContext<T>, Task> enumerationAction)
         {
             return ForEach(enumerable, loopState => enumerationAction(loopState.Item, loopState.Index, loopState));
         }
@@ -83,7 +83,7 @@ namespace ALinq
             return ForEach(enumerable, loopState => enumerationAction(loopState.Item));
         }
 
-        public static async Task ForEach<T>(this IAsyncEnumerable<T> enumerable, Func<AsyncLoopState<T>, Task> enumerationAction)
+        public static async Task ForEach<T>(this IAsyncEnumerable<T> enumerable, Func<AsyncLoopContext<T>, Task> enumerationAction)
         {
             if (enumerable == null) throw new ArgumentNullException("enumerable");
             if (enumerationAction == null) throw new ArgumentNullException("enumerationAction");
@@ -91,7 +91,7 @@ namespace ALinq
             var index      = 0L;
             var doContinue = true;
             var enumerator = enumerable.GetEnumerator();
-            var loopState  = new AsyncLoopState<T>();
+            var loopState  = new AsyncLoopContext<T>();
 
             try
             {

@@ -65,9 +65,10 @@
     <Compile Include="AsyncEnumerable.Range.cs" />
     <Compile Include="AsyncEnumerableConverter.cs" />
     <Compile Include="AsyncEnumeratorConverter.cs" />
-    <Compile Include="AsyncLoopState.cs" />
+    <Compile Include="AsyncLoopContext.cs" />
     <Compile Include="ConcurrentAsyncEnumerable.cs" />
     <Compile Include="ConcurrentAsyncEnumerator.cs" />
+    <Compile Include="ConcurrentAsyncGrouping.cs" />
     <Compile Include="ConcurrentAsyncProducer.cs" />
     <Compile Include="ConversionObserver.cs" />
     <Compile Include="AsyncEnumerable.Single.cs" />
@@ -82,8 +83,10 @@
     <Compile Include="AsyncEnumerable.Join.cs" />
     <Compile Include="AsyncEnumerable.ToArray.cs" />
     <Compile Include="AsyncEnumerable.ToDictionary.cs" />
+    <Compile Include="AsyncEnumerable.GroupBy.cs" />
     <Compile Include="IAsyncEnumerable.cs" />
     <Compile Include="IAsyncEnumerator.cs" />
+    <Compile Include="IAsyncGrouping.cs" />
     <Compile Include="IOrderedAsyncEnumerable.cs" />
     <Compile Include="OrderedAsyncEnumerable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

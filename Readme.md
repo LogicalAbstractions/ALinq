@@ -5,7 +5,6 @@ being worked on and in flux, and quite a few operators are not implemented yet.
 
 Missing LINQ operators:
 
- - GroupBy
  - GroupJoin
  - ThenBy
  - ThenByDescending

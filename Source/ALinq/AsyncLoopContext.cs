@@ -1,6 +1,6 @@
 ﻿namespace ALinq
 {
-    public sealed class AsyncLoopState<T>
+    public sealed class AsyncLoopContext<T>
     {
         public long     Index { get; internal set; }
         public T        Item  { get; internal set; }

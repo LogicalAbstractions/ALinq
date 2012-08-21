@@ -10,7 +10,7 @@ namespace ALinq
         {
             if (enumerable == null) throw new ArgumentNullException("enumerable");
 
-            return AsyncEnumerable.Create<T>(async producer =>
+            return Create<T>(async producer =>
             {
                 foreach (var item in enumerable)
                 {

@@ -15,11 +15,6 @@ namespace ALinq
             producerSemaphore.Release();
         }
 
-        public void Throw(Exception ex)
-        {
-            
-        }
-
         internal void Dispose()
         {
             producerSemaphore.Dispose();
