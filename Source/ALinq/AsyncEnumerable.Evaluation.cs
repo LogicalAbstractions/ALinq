@@ -58,6 +58,18 @@ namespace ALinq
             throw new InvalidOperationException("Sequence contains no matching element");
         }
 
+        public static async Task<T> Last<T>(this IAsyncEnumerable<T> enumerable)
+        {
+#pragma warning disable 1998
+            return await First<T>(enumerable.Reverse(), async item => true);
+#pragma warning restore 1998
+        }
+
+        public static async Task<T> Last<T>(this IAsyncEnumerable<T> enumerable, Func<T, Task<bool>> predicate)
+        {
+            return await First<T>(enumerable.Reverse(), predicate);
+        }
+
         public static async Task<T> Single<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
@@ -136,6 +148,16 @@ namespace ALinq
             }
 
             return default(T);
+        }
+
+        public static Task<T> LastOrDefault<T>(this IAsyncEnumerable<T> enumerable)
+        {
+            return FirstOrDefault(enumerable.Reverse());
+        }
+
+        public static Task<T> LastOrDefault<T>(this IAsyncEnumerable<T> enumerable,Func<T,Task<bool>> predicate)
+        {
+            return FirstOrDefault(enumerable.Reverse(), predicate);
         }
 
         public static async Task<T> FirstOrDefault<T>(this IAsyncEnumerable<T> enumerable)
