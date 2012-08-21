@@ -16,8 +16,6 @@ Missing LINQ operators:
  - Max
  - Min
  - SelectMany overloads
- - Single
- - SingleOrDefault
  - ThenBy
  - ThenByDescending
  - ToDictionary
