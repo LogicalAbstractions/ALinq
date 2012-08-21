@@ -48,8 +48,6 @@
     <Compile Include="AsyncEnumerableConverter.cs" />
     <Compile Include="AsyncEnumeratorConverter.cs" />
     <Compile Include="AsyncLoopState.cs" />
-    <Compile Include="BufferedAsyncEnumerable.cs" />
-    <Compile Include="BufferedOrderedAsyncEnumerable.cs" />
     <Compile Include="ConcurrentAsyncEnumerable.cs" />
     <Compile Include="ConcurrentAsyncEnumerator.cs" />
     <Compile Include="ConcurrentAsyncProducer.cs" />
@@ -57,6 +55,7 @@
     <Compile Include="IAsyncEnumerable.cs" />
     <Compile Include="IAsyncEnumerator.cs" />
     <Compile Include="IOrderedAsyncEnumerable.cs" />
+    <Compile Include="OrderedAsyncEnumerable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReverseComparer.cs" />
   </ItemGroup>
