@@ -28,7 +28,7 @@ namespace ALinq
             return OrderByCore(enumerable, keySelector,comparer,false);
         }
 
-        public static IOrderedAsyncEnumerable<TValue> ThenrByDescending<TKey, TValue>(this IOrderedAsyncEnumerable<TValue> enumerable, Func<TValue, Task<TKey>> keySelector)
+        public static IOrderedAsyncEnumerable<TValue> ThenByDescending<TKey, TValue>(this IOrderedAsyncEnumerable<TValue> enumerable, Func<TValue, Task<TKey>> keySelector)
         {
             return ThenByCore(enumerable, keySelector, Comparer<TKey>.Default, true);
         }
