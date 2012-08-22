@@ -8,7 +8,7 @@ namespace ALinq
         public static async Task<T> Single<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
-            return await First<T>(enumerable, async item => true);
+            return await Single(enumerable, async item => true);
 #pragma warning restore 1998
         }
 
@@ -50,7 +50,7 @@ namespace ALinq
         public static async Task<T> SingleOrDefault<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
-            return await First<T>(enumerable, async item => true);
+            return await SingleOrDefault(enumerable, async item => true);
 #pragma warning restore 1998
         }
 
