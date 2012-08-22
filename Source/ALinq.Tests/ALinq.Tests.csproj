@@ -51,8 +51,13 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AsyncEnumerableAllTests.cs" />
+    <Compile Include="AsyncEnumerableAnyTests.cs" />
+    <Compile Include="AsyncEnumerableAverageTests.cs" />
+    <Compile Include="AsyncEnumerableExceptTests.cs" />
+    <Compile Include="AsyncEnumerableForEachTests.cs" />
     <Compile Include="AsyncEnumerableMinTests.cs" />
     <Compile Include="AsyncEnumerableMaxTests.cs" />
+    <Compile Include="AsyncEnumerableSelectTests.cs" />
     <Compile Include="AsyncEnumerableSumTests.cs" />
     <Compile Include="AsyncEnumerableTakeTests.cs" />
     <Compile Include="AsyncEnumerableSkipTests.cs" />
