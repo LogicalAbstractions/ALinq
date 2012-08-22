@@ -13,7 +13,9 @@ namespace ALinq.Tests
 
             var counter = 0;
 
+#pragma warning disable 1998
             await sequence.ForEach(async (object value) =>
+#pragma warning restore 1998
             {
                 counter += (int) value;
             });

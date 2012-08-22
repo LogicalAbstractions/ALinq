@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ALinq.Tests
+namespace ALinq.Benchmark
 {
-    [TestClass]
-    public class AsyncEnumerableThenByTests
+    public static class EntryPoint
     {
         public class SortEntry : IEquatable<SortEntry>
         {
@@ -21,7 +19,7 @@ namespace ALinq.Tests
                 if (ReferenceEquals(null, obj)) return false;
                 if (ReferenceEquals(this, obj)) return true;
                 if (obj.GetType() != this.GetType()) return false;
-                return Equals((SortEntry) obj);
+                return Equals((SortEntry)obj);
             }
 
             public bool Equals(SortEntry other)
@@ -35,37 +33,47 @@ namespace ALinq.Tests
             {
                 unchecked
                 {
-                    return (Id1*397) ^ Id2;
+                    return (Id1 * 397) ^ Id2;
                 }
             }
 
-            public SortEntry(int id1,int id2)
+            public SortEntry(int id1, int id2)
             {
                 this.Id1 = id1;
                 this.Id2 = id2;
             }
         }
 
-        [TestMethod]
-        public async Task ThenByShouldWork()
+        public static int Main(string[] arguments)
+        {
+            Scenario01(10 * 1000 * 1000).Wait();
+            Scenario02(10 * 1000 * 1000).Wait();
+            Console.ReadKey();
+            return 0;
+        }
+
+        private static async Task Scenario01(int size)
         {
             var random      = new Random();
-            var data        = Enumerable.Range(0,1000).Select(i => new SortEntry(random.Next(0,10),random.Next(0,10))).ToList();
-            var orderedData = data.OrderBy(d => d.Id1).ThenBy(d => d.Id2).ToList();
+            var data        = Enumerable.Range(0, size).Select(i => new SortEntry(random.Next(0, 100), random.Next(0, 100))).ToList();
 
+            var stopWatch = new Stopwatch();
 #pragma warning disable 1998
+            stopWatch.Start();
             var result = await data.ToAsync().OrderBy(async i => i.Id1).ThenBy(async i => i.Id2).ToList();
+            Console.WriteLine("ALINQ: {0}",stopWatch.Elapsed);
 #pragma warning restore 1998
+        }
 
-            CollectionAssert.AreEqual((ICollection)orderedData.ToList(),(ICollection)result);
+        private static async Task Scenario02(int size)
+        {
+            var random = new Random();
+            var data = Enumerable.Range(0, size).Select(i => new SortEntry(random.Next(0, 100), random.Next(0, 100))).ToList();
 
-#pragma warning disable 1998
-            var result2 = await data.ToAsync().OrderByDescending(async i => i.Id1).ThenByDescending(async i => i.Id2).ToList();
-#pragma warning restore 1998
-
-            var reverseOrderedData = ((IEnumerable<SortEntry>) orderedData).Reverse().ToList();
-
-            CollectionAssert.AreEqual((ICollection)reverseOrderedData, (ICollection)result2);
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+            var orderedData = data.OrderBy(d => d.Id1).ThenBy(d => d.Id2).ToList();
+            Console.WriteLine("LINQ: {0}", stopWatch.Elapsed);
         }
     }
 }

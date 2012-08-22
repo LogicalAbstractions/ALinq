@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{99067F
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALinq.Benchmark", "ALinq.Benchmark\ALinq.Benchmark.csproj", "{248D54B2-9134-404F-848F-FC5AFC433EB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,11 +30,16 @@ Global
 		{27A7F4F2-501C-4042-BACE-88AC8ED78AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27A7F4F2-501C-4042-BACE-88AC8ED78AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27A7F4F2-501C-4042-BACE-88AC8ED78AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{248D54B2-9134-404F-848F-FC5AFC433EB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{248D54B2-9134-404F-848F-FC5AFC433EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{248D54B2-9134-404F-848F-FC5AFC433EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{248D54B2-9134-404F-848F-FC5AFC433EB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{27A7F4F2-501C-4042-BACE-88AC8ED78AB5} = {20FE8F50-53F4-40C9-B980-E698FC0C98B6}
+		{248D54B2-9134-404F-848F-FC5AFC433EB8} = {20FE8F50-53F4-40C9-B980-E698FC0C98B6}
 	EndGlobalSection
 EndGlobal

@@ -22,7 +22,7 @@ namespace ALinq.Tests
 #pragma warning restore 1998
                 Assert.Fail("No exception thrown");
             }
-            catch( InvalidOperationException ex )
+            catch( InvalidOperationException )
             {
                 
             }
