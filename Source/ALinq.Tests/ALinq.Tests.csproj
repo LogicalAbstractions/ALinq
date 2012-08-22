@@ -53,9 +53,11 @@
     <Compile Include="AsyncEnumerableAllTests.cs" />
     <Compile Include="AsyncEnumerableAnyTests.cs" />
     <Compile Include="AsyncEnumerableAverageTests.cs" />
+    <Compile Include="AsyncEnumerableElementAtTests.cs" />
     <Compile Include="AsyncEnumerableExceptTests.cs" />
     <Compile Include="AsyncEnumerableFirstTests.cs" />
     <Compile Include="AsyncEnumerableForEachTests.cs" />
+    <Compile Include="AsyncEnumerableGroupByTests.cs" />
     <Compile Include="AsyncEnumerableMinTests.cs" />
     <Compile Include="AsyncEnumerableMaxTests.cs" />
     <Compile Include="AsyncEnumerableOrderByTests.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -65,6 +66,25 @@ namespace ALinq.Tests
             var reverseOrderedData = ((IEnumerable<SortEntry>) orderedData).Reverse().ToList();
 
             CollectionAssert.AreEqual((ICollection)reverseOrderedData, (ICollection)result2);
+        }
+
+        [TestMethod]
+        public async Task ThenByPerformanceComparison()
+        {
+            var random      = new Random();
+            var data        = Enumerable.Range(0, 100000).Select(i => new SortEntry(random.Next(0, 100), random.Next(0, 100))).ToList();
+
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+            var orderedData = data.OrderBy(d => d.Id1).ThenBy(d => d.Id2).ToList();
+            Console.WriteLine("LINQ: {0}",stopWatch.Elapsed);
+
+
+#pragma warning disable 1998
+            stopWatch.Restart();
+            var result = await data.ToAsync().OrderBy(async i => i.Id1).ThenBy(async i => i.Id2).ToList();
+            Console.WriteLine("ALINQ: {0}",stopWatch.Elapsed);
+#pragma warning restore 1998
         }
     }
 }
