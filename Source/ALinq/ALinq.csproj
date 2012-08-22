@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncAutoResetEvent.cs" />
     <Compile Include="AsyncEnumerable.Concat.cs" />
     <Compile Include="AsyncEnumerable.First.cs" />
     <Compile Include="AsyncEnumerable.OfType.cs" />

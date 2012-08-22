@@ -20,12 +20,13 @@ namespace ALinq
             var result = default(T);
             var found = false;
 
-            await enumerable.ForEach(async item =>
+            await enumerable.ForEach(async state =>
             {
-                if (await predicate(item))
+                if (await predicate(state.Item))
                 {
                     found = true;
-                    result = item;
+                    result = state.Item;
+                    state.Break();
                 }
             });
 
@@ -52,12 +53,13 @@ namespace ALinq
             var result = default(T);
             var found = false;
 
-            await enumerable.ForEach(async item =>
+            await enumerable.ForEach(async state =>
             {
-                if (await predicate(item))
+                if (await predicate(state.Item))
                 {
                     found = true;
-                    result = item;
+                    result = state.Item;
+                    state.Break();
                 }
             });
 

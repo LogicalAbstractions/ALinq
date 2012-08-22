@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 
 namespace ALinq
 {
-    internal sealed class ConcurrentAsyncEnumerator<T> : IAsyncEnumerator<T>,IDisposable
+    internal sealed class ConcurrentAsyncEnumerator<T> : IAsyncEnumerator<T>
     {
         private readonly ConcurrentAsyncProducer<T> producer;
-        private readonly SemaphoreSlim              consumerSemaphore = new SemaphoreSlim(0,1);
+        private readonly AsyncAutoResetEvent        consumerEvent = new AsyncAutoResetEvent();
+        private readonly AsyncAutoResetEvent        producerEvent = new AsyncAutoResetEvent();
         private T                                   current;
         private volatile bool                       hasFinished;
         private Exception                           exception;
@@ -34,34 +35,18 @@ namespace ALinq
                 return false;
             }
 
-            consumerSemaphore.Release();
-            await producer.WaitAsync();
-
-            if (hasFinished)
-            {
-                if (exception != null)
-                {
-                    throw exception;
-                }
-
-                return false;
-            }
-
+            consumerEvent.Set();
+            await producerEvent.WaitAsync();
             return true;
-        }
-
-        void IDisposable.Dispose()
-        {
-            producer.Dispose();
-            consumerSemaphore.Dispose();
         }
 
         internal ConcurrentAsyncEnumerator(Func<ConcurrentAsyncProducer<T>,Task> producerFunc)
         {
             producer = new ConcurrentAsyncProducer<T>(async item =>
             {
-                await consumerSemaphore.WaitAsync();
+                await consumerEvent.WaitAsync();
                 current = item;
+                producerEvent.Set();
             });
 
             producerFunc(producer).ContinueWith(t =>
@@ -72,7 +57,7 @@ namespace ALinq
                 }
 
                 hasFinished = true;
-                producer.TryRelease();
+                producerEvent.Set();
             },TaskContinuationOptions.ExecuteSynchronously);
         }
     }

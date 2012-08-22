@@ -56,8 +56,8 @@ namespace ALinq
             if (observable == null) throw new ArgumentNullException("observable");
 
             return Create<T>(async producer => {
-            
-                using( var converter = new ConversionObserver<T>(producer))
+
+                var converter = new ConversionObserver<T>(producer);
                 {
                     using (observable.Subscribe(converter))
                     {

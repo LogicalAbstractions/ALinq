@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace ALinq
 {
-    internal sealed class ConversionObserver<T> : IObserver<T>,IDisposable 
+    internal sealed class ConversionObserver<T> : IObserver<T> 
     {
         private readonly ConcurrentAsyncProducer<T> producer;
-        private readonly SemaphoreSlim              completedSemaphore = new SemaphoreSlim(0, 1);
+        private readonly AsyncAutoResetEvent        completedEvent = new AsyncAutoResetEvent();
         private Exception                           exception;
 
         internal async Task WaitForCompletion()
         {
-            await completedSemaphore.WaitAsync();
+            await completedEvent.WaitAsync();
 
             if (exception != null)
             {
@@ -25,37 +25,18 @@ namespace ALinq
 
         void IObserver<T>.OnCompleted()
         {
-            try
-            {
-                completedSemaphore.Release();
-            }
-            catch(SemaphoreFullException)
-            {
-            
-            }
+            completedEvent.Set();
         }
 
         void IObserver<T>.OnError(Exception error)
         {
-            try
-            {
-                exception = error;
-                completedSemaphore.Release();
-            }
-            catch (SemaphoreFullException)
-            {
-
-            }
+            exception = error;
+            completedEvent.Set();
         }
 
         void IObserver<T>.OnNext(T value)
         {
             producer.Yield(value).Wait();
-        }
-
-        void IDisposable.Dispose()
-        {
-            completedSemaphore.Dispose();
         }
 
         internal ConversionObserver(ConcurrentAsyncProducer<T> producer)
