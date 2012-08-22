@@ -8,38 +8,62 @@ namespace ALinq
 {
     public static partial class AsyncEnumerable
     {
-        public static IAsyncEnumerable<TValue> OrderByDescending<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector)
+        public static IOrderedAsyncEnumerable<TValue> OrderByDescending<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector)
         {
-            return OrderByDescending(enumerable, keySelector, Comparer<TKey>.Default);
+            return OrderByCore(enumerable, keySelector, Comparer<TKey>.Default,true);
         }
 
-        public static IAsyncEnumerable<TValue> OrderByDescending<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector,IComparer<TKey> comparer)
+        public static IOrderedAsyncEnumerable<TValue> OrderByDescending<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector,IComparer<TKey> comparer)
         {
-            return OrderBy(enumerable, keySelector, new ReverseComparer<TKey>(comparer));
+            return OrderByCore(enumerable, keySelector, comparer,true);
         }
 
-        public static IAsyncEnumerable<TValue> OrderBy<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector)
+        public static IOrderedAsyncEnumerable<TValue> OrderBy<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector)
         {
-            return OrderBy(enumerable, keySelector, Comparer<TKey>.Default);
+            return OrderByCore(enumerable, keySelector, Comparer<TKey>.Default,false);
         }
 
-        public static IAsyncEnumerable<TValue> OrderBy<TKey,TValue>(this IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector,IComparer<TKey> comparer)
+        public static IOrderedAsyncEnumerable<TValue> OrderBy<TKey, TValue>(this IAsyncEnumerable<TValue> enumerable, Func<TValue, Task<TKey>> keySelector,IComparer<TKey> comparer)
+        {
+            return OrderByCore(enumerable, keySelector,comparer,false);
+        }
+
+        public static IOrderedAsyncEnumerable<TValue> ThenrByDescending<TKey, TValue>(this IOrderedAsyncEnumerable<TValue> enumerable, Func<TValue, Task<TKey>> keySelector)
+        {
+            return ThenByCore(enumerable, keySelector, Comparer<TKey>.Default, true);
+        }
+
+        public static IOrderedAsyncEnumerable<TValue> ThenByDescending<TKey, TValue>(this IOrderedAsyncEnumerable<TValue> enumerable, Func<TValue, Task<TKey>> keySelector, IComparer<TKey> comparer)
+        {
+            return ThenByCore(enumerable, keySelector, comparer, true);
+        }
+
+        public static IOrderedAsyncEnumerable<TValue> ThenBy<TKey, TValue>(this IOrderedAsyncEnumerable<TValue> enumerable, Func<TValue, Task<TKey>> keySelector)
+        {
+            return ThenByCore(enumerable, keySelector, Comparer<TKey>.Default, false);
+        }
+
+        public static IOrderedAsyncEnumerable<TValue> ThenBy<TKey, TValue>(this IOrderedAsyncEnumerable<TValue> enumerable, Func<TValue, Task<TKey>> keySelector, IComparer<TKey> comparer)
+        {
+            return ThenByCore(enumerable, keySelector, comparer, false);
+        }
+
+        private static IOrderedAsyncEnumerable<TValue> OrderByCore<TKey,TValue>(IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector,IComparer<TKey> comparer,bool descending)
         {
             if (enumerable == null) throw new ArgumentNullException("enumerable");
             if (keySelector == null) throw new ArgumentNullException("keySelector");
             if (comparer == null) throw new ArgumentNullException("comparer");
 
-            var result = new List<KeyValuePair<TKey,TValue>>();
+            return new OrderedAsyncSequence<TKey, TValue>(enumerable, keySelector, comparer, descending);
+        }
 
-            return Create<TValue>(async producer =>
-            {
-                await enumerable.ForEach(async item => result.Add(new KeyValuePair<TKey,TValue>(await keySelector(item),item)));
+        private static IOrderedAsyncEnumerable<TValue> ThenByCore<TKey,TValue>(IOrderedAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector,IComparer<TKey> comparer,bool descending )
+        {
+            if (enumerable == null) throw new ArgumentNullException("enumerable");
+            if (keySelector == null) throw new ArgumentNullException("keySelector");
+            if (comparer == null) throw new ArgumentNullException("comparer");
 
-                foreach( var item in result.OrderBy(pair => pair.Key,comparer))
-                {
-                    await producer.Yield(item.Value);
-                }
-            });
+            return enumerable.CreateOrderedEnumerable(keySelector, comparer, descending);
         }
     }
 }

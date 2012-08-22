@@ -5,51 +5,33 @@ using System.Threading.Tasks;
 
 namespace ALinq
 {
-    internal sealed class OrderedAsyncEnumerable<TKey,TValue> : IOrderedAsyncEnumerable<TValue> 
+    internal abstract class OrderedAsyncEnumerable<TValue> : IOrderedAsyncEnumerable<TValue> 
     {
-        private readonly IAsyncEnumerable<TValue>   enumerable;
-        private readonly Func<TValue, Task<TKey>>   keySelector;
-        private readonly IComparer<TKey>            comparer; 
+        private readonly IAsyncEnumerable<TValue> source;
 
-        internal OrderedAsyncEnumerable(IAsyncEnumerable<TValue> enumerable,Func<TValue,Task<TKey>> keySelector,IComparer<TKey> comparer,bool descending)
-        {
-            this.enumerable     = enumerable;
-            this.keySelector    = keySelector;
-            this.comparer       = descending ? new ReverseComparer<TKey>(comparer) : comparer;
-        }
+        internal abstract AsyncSortContext<TValue>  CreateContext(AsyncSortContext<TValue> current);
+        protected abstract IAsyncEnumerable<TValue> Sort(IAsyncEnumerable<TValue> source);
 
-        IOrderedAsyncEnumerable<TValue> IOrderedAsyncEnumerable<TValue>.CreateOrderedEnumerable<TThenKey>(Func<TValue, Task<TThenKey>> keySelector, IComparer<TThenKey> comparer, bool descending)
+        IOrderedAsyncEnumerable<TValue> IOrderedAsyncEnumerable<TValue>.CreateOrderedEnumerable<TKey>(Func<TValue, Task<TKey>> keySelector, IComparer<TKey> comparer, bool descending)
         {
-            throw new NotImplementedException();
+            return new OrderedAsyncSequence<TKey,TValue>(this, source, keySelector, comparer,descending);
         }
 
         IAsyncEnumerator<TValue> IAsyncEnumerable<TValue>.GetEnumerator()
         {
-            return CreateEnumerator();
+            return Sort(source).GetEnumerator();
         }
 
         IAsyncEnumerator IAsyncEnumerable.GetEnumerator()
         {
-            return CreateEnumerator();
+            return Sort(source).GetEnumerator();
         }
 
-        private IAsyncEnumerator<TValue> CreateEnumerator()
+        protected OrderedAsyncEnumerable (IAsyncEnumerable<TValue> source)
         {
-            return AsyncEnumerable.Create<TValue>(async producer =>
-            {
-                var items = await enumerable.ToList();
-                var itemPairs = new List<KeyValuePair<TKey, TValue>>();
+            if (source == null) throw new ArgumentNullException("source");
 
-                foreach (var item in items)
-                {
-                    itemPairs.Add(new KeyValuePair<TKey, TValue>(await keySelector(item), item));
-                }
-
-                foreach (var item in itemPairs.OrderBy(pair => pair.Key).Select(pair => pair.Value))
-                {
-                    await producer.Yield(item);
-                }
-            }).GetEnumerator();
+            this.source = source;
         }
     }
 }

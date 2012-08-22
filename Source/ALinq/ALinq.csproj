@@ -66,6 +66,8 @@
     <Compile Include="AsyncEnumerableConverter.cs" />
     <Compile Include="AsyncEnumeratorConverter.cs" />
     <Compile Include="AsyncLoopContext.cs" />
+    <Compile Include="AsyncSortContext.cs" />
+    <Compile Include="AsyncSortSequenceContext.cs" />
     <Compile Include="ConcurrentAsyncEnumerable.cs" />
     <Compile Include="ConcurrentAsyncEnumerator.cs" />
     <Compile Include="ConcurrentAsyncGrouping.cs" />
@@ -90,8 +92,9 @@
     <Compile Include="IAsyncGrouping.cs" />
     <Compile Include="IOrderedAsyncEnumerable.cs" />
     <Compile Include="OrderedAsyncEnumerable.cs" />
+    <Compile Include="OrderedAsyncSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReverseComparer.cs" />
+    <Compile Include="QuickSort.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
