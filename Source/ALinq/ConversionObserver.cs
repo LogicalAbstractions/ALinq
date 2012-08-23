@@ -10,7 +10,7 @@ namespace ALinq
     internal sealed class ConversionObserver<T> : IObserver<T> 
     {
         private readonly ConcurrentAsyncProducer<T> producer;
-        private readonly AsyncAutoResetEvent        completedEvent = new AsyncAutoResetEvent();
+        private readonly AsyncSingleAutoResetEvent        completedEvent = new AsyncSingleAutoResetEvent();
         private Exception                           exception;
 
         internal async Task WaitForCompletion()

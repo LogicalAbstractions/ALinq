@@ -7,8 +7,8 @@ namespace ALinq
     internal sealed class ConcurrentAsyncEnumerator<T> : IAsyncEnumerator<T>
     {
         private readonly ConcurrentAsyncProducer<T> producer;
-        private readonly AsyncAutoResetEvent        consumerEvent = new AsyncAutoResetEvent();
-        private readonly AsyncAutoResetEvent        producerEvent = new AsyncAutoResetEvent();
+        private readonly AsyncSingleAutoResetEvent        consumerEvent = new AsyncSingleAutoResetEvent();
+        private readonly AsyncSingleAutoResetEvent        producerEvent = new AsyncSingleAutoResetEvent();
         private T                                   current;
         private volatile bool                       hasFinished;
         private Exception                           exception;

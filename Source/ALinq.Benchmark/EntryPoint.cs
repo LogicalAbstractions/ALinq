@@ -9,6 +9,24 @@ namespace ALinq.Benchmark
 {
     public static class EntryPoint
     {
+        public class Profiler : IDisposable
+        {
+            private readonly string     name;
+            private readonly Stopwatch  stopWatch = new Stopwatch();
+
+            public void Dispose()
+            {
+                stopWatch.Stop();
+                Console.WriteLine("{0}: {1}",name,stopWatch.Elapsed);
+            }
+
+            public Profiler(string name)
+            {
+                this.name = name;
+                stopWatch.Start();
+            }
+        }
+
         public class SortEntry : IEquatable<SortEntry>
         {
             public int Id1 { get; private set; }
@@ -46,8 +64,8 @@ namespace ALinq.Benchmark
 
         public static int Main(string[] arguments)
         {
-            Scenario01(10 * 1000 * 1000).Wait();
-            Scenario02(10 * 1000 * 1000).Wait();
+            Scenario03(100 * 1000 * 1000).Wait();
+            Scenario04(100 * 1000 * 1000);
             Console.ReadKey();
             return 0;
         }
@@ -57,23 +75,43 @@ namespace ALinq.Benchmark
             var random      = new Random();
             var data        = Enumerable.Range(0, size).Select(i => new SortEntry(random.Next(0, 100), random.Next(0, 100))).ToList();
 
-            var stopWatch = new Stopwatch();
 #pragma warning disable 1998
-            stopWatch.Start();
-            var result = await data.ToAsync().OrderBy(async i => i.Id1).ThenBy(async i => i.Id2).ToList();
-            Console.WriteLine("ALINQ: {0}",stopWatch.Elapsed);
+
+            using (new Profiler("ALINQ Scenario01"))
+            {
+                var result =
+                    await
+                    data.ToAsync().OrderBy(i => Task.FromResult(i.Id1)).ThenBy(i => Task.FromResult(i.Id2)).ToList();
+            }
+
 #pragma warning restore 1998
         }
 
-        private static async Task Scenario02(int size)
+        private static void Scenario02(int size)
         {
             var random = new Random();
             var data = Enumerable.Range(0, size).Select(i => new SortEntry(random.Next(0, 100), random.Next(0, 100))).ToList();
 
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
-            var orderedData = data.OrderBy(d => d.Id1).ThenBy(d => d.Id2).ToList();
-            Console.WriteLine("LINQ: {0}", stopWatch.Elapsed);
+            using (new Profiler("LINQ Scenario02"))
+            {
+                var orderedData = data.OrderBy(d => d.Id1).ThenBy(d => d.Id2).ToList();
+            }
+        }
+
+        private static async Task Scenario03(int size)
+        {
+            using (new Profiler("ALINQ Scenario03"))
+            {
+                var data = await AsyncEnumerable.Range(0, size).ToList();
+            }
+        }
+
+        private static void Scenario04(int size)
+        {
+            using (new Profiler("LINQ Scenario04"))
+            {
+                Enumerable.Range(0, size).ToList();
+            }
         }
     }
 }

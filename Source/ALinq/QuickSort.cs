@@ -99,7 +99,6 @@ namespace ALinq
             }
             else
             {
-                // If there are three items in the subarray, insertion sort is better
                 InsertionSort(left, right);
             }
         }

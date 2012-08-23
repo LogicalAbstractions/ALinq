@@ -14,7 +14,7 @@ namespace ALinq
         {
             if (ChildContext != null)
             {
-                ChildContext.Initialize(elements);
+                await ChildContext.Initialize(elements);
             }
 
             keys = new TKey[elements.Length];
