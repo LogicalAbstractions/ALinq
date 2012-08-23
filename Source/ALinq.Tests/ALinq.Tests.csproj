@@ -75,6 +75,7 @@
     <Compile Include="AsyncEnumerableLastTests.cs" />
     <Compile Include="AsyncEnumerableThenByTests.cs" />
     <Compile Include="AsyncEnumerableCastTests.cs" />
+    <Compile Include="AsyncEnumerableUnionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AsyncEnumerableAggregateTests.cs" />
     <Compile Include="AsyncEnumerableConcatTests.cs" />

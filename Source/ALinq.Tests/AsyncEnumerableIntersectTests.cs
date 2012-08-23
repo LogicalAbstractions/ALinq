@@ -7,6 +7,7 @@ namespace ALinq.Tests
     [TestClass]
     public class AsyncEnumerableIntersectTests
     {
+        [TestMethod]
         public async Task IntersectShouldWork()
         {
             var sequence1 = AsyncEnumerable.Range(0, 100);

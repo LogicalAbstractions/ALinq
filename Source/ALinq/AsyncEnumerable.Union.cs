@@ -18,7 +18,7 @@ namespace ALinq
 
             return Create<T>(async producer =>
             {
-                var set = new HashSet<T>();
+                var set = new HashSet<T>(comparer);
 
                 await first.ForEach(async item =>
                 {
@@ -29,7 +29,7 @@ namespace ALinq
                     }
                 });
 
-                await first.ForEach(async item =>
+                await second.ForEach(async item =>
                 {
                     if (!set.Contains(item))
                     {
