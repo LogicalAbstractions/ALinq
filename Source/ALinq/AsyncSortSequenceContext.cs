@@ -36,10 +36,10 @@ namespace ALinq
                     return ChildContext.Compare(firstIndex, secondIndex);
                 }
 
-                comparison = Descending ? secondIndex - firstIndex : firstIndex - secondIndex;
+                comparison = descending ? secondIndex - firstIndex : firstIndex - secondIndex;
             }
 
-            return Descending ? -comparison : comparison;
+            return descending ? -comparison : comparison;
         }
 
         public AsyncSortSequenceContext(AsyncSortContext<TElement> childContext,Func<TElement, Task<TKey>> keySelector, IComparer<TKey> comparer, bool descending)

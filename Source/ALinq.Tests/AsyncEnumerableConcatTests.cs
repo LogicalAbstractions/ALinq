@@ -14,7 +14,7 @@ namespace ALinq.Tests
         public async Task ConcatShouldAppendSequences()
         {
             var sequence1 = AsyncEnumerable.Range(0, 9);
-            var sequence2 = AsyncEnumerable.Range(9, 20);
+            var sequence2 = AsyncEnumerable.Range(9, 11);
 
             var sequence3 = sequence1.Concat(sequence2);
             var result = await sequence3.ToList();

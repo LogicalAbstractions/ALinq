@@ -4,13 +4,8 @@ namespace ALinq
 {
     internal abstract class AsyncSortContext<TElement>
     {
-        private readonly bool                        descending;
-        private readonly AsyncSortContext<TElement>  childContext;
-
-        protected bool Descending
-        {
-            get { return descending; }
-        }
+        protected readonly bool                         descending;
+        private readonly AsyncSortContext<TElement>     childContext;
 
         protected AsyncSortContext<TElement> ChildContext
         {

@@ -22,12 +22,14 @@ namespace ALinq
                 {
                     while( doContinue )
                     {
-                        if ( await enumerator1.MoveNext() && await enumerator2.MoveNext())
+                        if (await enumerator1.MoveNext() && await enumerator2.MoveNext())
                         {
                             await producer.Yield(await merger(enumerator1.Current, enumerator2.Current));
                         }
-
-                        doContinue = false;
+                        else
+                        {
+                            doContinue = false;
+                        }
                     }
                 }
                 finally

@@ -13,7 +13,7 @@ namespace ALinq.Tests
 
             public IAsyncEnumerable<int> Member
             {
-                get { return AsyncEnumerable.Range(start, start + 10); }
+                get { return AsyncEnumerable.Range(start, 10); }
             }
 
             public Entry(int start)

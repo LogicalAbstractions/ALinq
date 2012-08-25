@@ -7,16 +7,21 @@ namespace ALinq
 {
     public static partial class AsyncEnumerable
     {
-        public static IAsyncEnumerable<int> Range(int start,int end)
+        public static IAsyncEnumerable<int> Range(int start,int count)
         {
-            return Range(start, end, 1);
+            return Range(start, count, 1);
         }
 
-        public static IAsyncEnumerable<int> Range(int start,int end,int step)
+        public static IAsyncEnumerable<int> Range(int start,int count,int step)
         {
-            if ( start >= end )
+            if ( start < 0 )
             {
-                throw new ArgumentOutOfRangeException("start", "start must be smaller than end");
+                throw new ArgumentOutOfRangeException("start","start must be greater or equal to zero");
+            }
+
+            if ( count < 0 )
+            {
+                throw new ArgumentOutOfRangeException("count","count must be greater or equal to zero");
             }
 
             if ( step < 1 )
@@ -24,12 +29,12 @@ namespace ALinq
                 throw new ArgumentOutOfRangeException("step", "step must be greater than zero");
             }
 
-            return RangeCore(start, end, step).ToAsync();
+            return RangeCore(start, count, step).ToAsync();
         }
 
-        private static IEnumerable<Task<int>> RangeCore(int start,int end,int step)
+        private static IEnumerable<Task<int>> RangeCore(int start,int count,int step)
         {
-            for( var i = start; i < end; i+= step)
+            for( var i = start; i < start + count; i+= step)
             {
                 yield return Task.FromResult(i);
             }

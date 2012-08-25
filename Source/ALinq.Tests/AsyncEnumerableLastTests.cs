@@ -10,7 +10,7 @@ namespace ALinq.Tests
         [TestMethod]
         public async Task LastShouldReturnLastElement()
         {
-            Assert.AreEqual(19,await AsyncEnumerable.Range(10,20).Last());
+            Assert.AreEqual(29,await AsyncEnumerable.Range(10,20).Last());
 #pragma warning disable 1998
             Assert.AreEqual(19,await AsyncEnumerable.Range(0,20).Last(async i => i > 10 && i % 2 > 0));
 #pragma warning restore 1998
@@ -31,7 +31,7 @@ namespace ALinq.Tests
         [TestMethod]
         public async Task LastOrDefaultShouldReturnLastElement()
         {
-            Assert.AreEqual(19, await AsyncEnumerable.Range(10, 20).LastOrDefault());
+            Assert.AreEqual(29, await AsyncEnumerable.Range(10, 20).LastOrDefault());
 #pragma warning disable 1998
             Assert.AreEqual(19, await AsyncEnumerable.Range(0, 20).LastOrDefault(async i => i > 10 && i % 2 > 0));
 #pragma warning restore 1998
