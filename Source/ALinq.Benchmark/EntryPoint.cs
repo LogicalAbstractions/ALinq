@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ALinq.Benchmark
@@ -66,6 +67,8 @@ namespace ALinq.Benchmark
         {
             Scenario03(100 * 1000 * 1000).Wait();
             Scenario04(100 * 1000 * 1000);
+
+            
             Console.ReadKey();
             return 0;
         }

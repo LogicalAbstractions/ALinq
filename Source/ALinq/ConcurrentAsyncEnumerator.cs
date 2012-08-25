@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 
 namespace ALinq
 {
     internal sealed class ConcurrentAsyncEnumerator<T> : IAsyncEnumerator<T>
     {
-        private readonly ConcurrentAsyncProducer<T> producer;
-        private readonly AsyncSingleAutoResetEvent        consumerEvent = new AsyncSingleAutoResetEvent();
-        private readonly AsyncSingleAutoResetEvent        producerEvent = new AsyncSingleAutoResetEvent();
-        private T                                   current;
-        private volatile bool                       hasFinished;
-        private Exception                           exception;
+        private readonly BufferBlock<T> valueBufferBlock = new BufferBlock<T>(new DataflowBlockOptions() { BoundedCapacity = 1});
+        private T                       current;
+        private Exception               exception;
        
         T IAsyncEnumerator<T>.Current
         {
@@ -25,7 +23,13 @@ namespace ALinq
 
         async Task<bool> IAsyncEnumerator.MoveNext()
         {
-            if ( hasFinished )
+            try
+            {
+                var newValue = await valueBufferBlock.ReceiveAsync();
+                current = newValue;
+                return true;
+            }
+            catch ( InvalidOperationException )
             {
                 if ( exception != null )
                 {
@@ -34,19 +38,13 @@ namespace ALinq
 
                 return false;
             }
-
-            consumerEvent.Set();
-            await producerEvent.WaitAsync();
-            return true;
         }
 
         internal ConcurrentAsyncEnumerator(Func<ConcurrentAsyncProducer<T>,Task> producerFunc)
         {
-            producer = new ConcurrentAsyncProducer<T>(async item =>
+            var producer = new ConcurrentAsyncProducer<T>(async item =>
             {
-                await consumerEvent.WaitAsync();
-                current = item;
-                producerEvent.Set();
+                await valueBufferBlock.SendAsync(item);
             });
 
             producerFunc(producer).ContinueWith(t =>
@@ -56,8 +54,7 @@ namespace ALinq
                     exception = t.Exception;
                 }
 
-                hasFinished = true;
-                producerEvent.Set();
+                valueBufferBlock.Complete();
             },TaskContinuationOptions.ExecuteSynchronously);
         }
     }
