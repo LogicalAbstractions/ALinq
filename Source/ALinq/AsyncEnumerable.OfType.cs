@@ -14,9 +14,9 @@ namespace ALinq
                 {
                     if (item is TOut)
                     {
-                        await producer.Yield((TOut)item);
+                        await producer.Yield((TOut)item).ConfigureAwait(false);
                     }
-                });
+                }).ConfigureAwait(false);
             });
         }
 
@@ -30,9 +30,9 @@ namespace ALinq
                 {
                     if ( item is TOut)
                     {
-                        await producer.Yield((TOut)(object)item);
+                        await producer.Yield((TOut)(object)item).ConfigureAwait(false);
                     }
-                });
+                }).ConfigureAwait(false);
             });
         }
     }

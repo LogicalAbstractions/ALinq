@@ -8,7 +8,7 @@ namespace ALinq
         public static async Task<T> First<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
-            return await First(enumerable, async item => true);
+            return await First(enumerable, async item => true).ConfigureAwait(false);
 #pragma warning restore 1998
         }
 
@@ -22,13 +22,13 @@ namespace ALinq
 
             await enumerable.ForEach(async state =>
             {
-                if (await predicate(state.Item))
+                if (await predicate(state.Item).ConfigureAwait(false))
                 {
                     found = true;
                     result = state.Item;
                     state.Break();
                 }
-            });
+            }).ConfigureAwait(false);
 
             if (found)
             {
@@ -41,7 +41,7 @@ namespace ALinq
         public static async Task<T> FirstOrDefault<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
-            return await FirstOrDefault<T>(enumerable, async item => true);
+            return await FirstOrDefault<T>(enumerable, async item => true).ConfigureAwait(false);
 #pragma warning restore 1998
         }
 
@@ -55,13 +55,13 @@ namespace ALinq
 
             await enumerable.ForEach(async state =>
             {
-                if (await predicate(state.Item))
+                if (await predicate(state.Item).ConfigureAwait(false))
                 {
                     found = true;
                     result = state.Item;
                     state.Break();
                 }
-            });
+            }).ConfigureAwait(false);
 
             return found ? result : default(T);
         }

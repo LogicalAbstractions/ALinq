@@ -12,7 +12,7 @@ namespace ALinq
             {
                 for (var i = 0; i < count; ++i)
                 {
-                    await producer.Yield(value);
+                    await producer.Yield(value).ConfigureAwait(false);
                 }
             });
         }

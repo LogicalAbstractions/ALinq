@@ -17,7 +17,7 @@ namespace ALinq
             await enumerable.ForEach(async item => 
             {
                 result.Add(item);
-            });
+            }).ConfigureAwait(false);
 #pragma warning restore 1998
 
             return result;

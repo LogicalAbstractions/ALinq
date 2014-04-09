@@ -20,8 +20,8 @@ namespace ALinq
             {
                 await enumerable.ForEach(async (item,index) =>
                 {
-                    await producer.Yield(await selector(item,index));
-                });
+                    await producer.Yield(await selector(item, index)).ConfigureAwait(false);
+                }).ConfigureAwait(false);
             });
         }
     }

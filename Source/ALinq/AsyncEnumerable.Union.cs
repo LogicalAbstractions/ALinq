@@ -25,18 +25,18 @@ namespace ALinq
                     if (!set.Contains(item))
                     {
                         set.Add(item);
-                        await producer.Yield(item);
+                        await producer.Yield(item).ConfigureAwait(false);
                     }
-                });
+                }).ConfigureAwait(false);
 
                 await second.ForEach(async item =>
                 {
                     if (!set.Contains(item))
                     {
                         set.Add(item);
-                        await producer.Yield(item);
+                        await producer.Yield(item).ConfigureAwait(false);
                     }
-                });
+                }).ConfigureAwait(false);
             });
         }
     }

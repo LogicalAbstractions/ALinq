@@ -23,7 +23,7 @@ namespace ALinq
 #pragma warning restore 1998
             {
                 counter++;
-            });
+            }).ConfigureAwait(false);
 
             return counter;
         }
@@ -46,7 +46,7 @@ namespace ALinq
 #pragma warning restore 1998
             {
                 counter++;
-            });
+            }).ConfigureAwait(false);
 
             return counter;
         }

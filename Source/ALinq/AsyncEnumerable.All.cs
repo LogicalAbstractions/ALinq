@@ -14,12 +14,12 @@ namespace ALinq
 
             await enumerable.ForEach(async state =>
             {
-                if (!await predicate(state.Item))
+                if (!await predicate(state.Item).ConfigureAwait(false))
                 {
                     result = false;
                     state.Break();
                 }
-            });
+            }).ConfigureAwait(false);
 
             return result;
         }

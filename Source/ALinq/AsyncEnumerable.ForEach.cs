@@ -39,14 +39,14 @@ namespace ALinq
             {
                 while (doContinue)
                 {
-                    doContinue = await enumerator.MoveNext();
+                    doContinue = await enumerator.MoveNext().ConfigureAwait(false);
 
                     if (doContinue)
                     {
                         loopState.Item  = enumerator.Current;
                         loopState.Index = index;
 
-                        await enumerationAction(loopState);
+                        await enumerationAction(loopState).ConfigureAwait(false);
 
                         if (loopState.WasBreakCalled)
                         {
@@ -97,14 +97,14 @@ namespace ALinq
             {
                 while (doContinue)
                 {
-                    doContinue = await enumerator.MoveNext();
+                    doContinue = await enumerator.MoveNext().ConfigureAwait(false);
 
                     if (doContinue)
                     {
                         loopState.Item = enumerator.Current;
                         loopState.Index = index;
 
-                        await enumerationAction(loopState);
+                        await enumerationAction(loopState).ConfigureAwait(false);
 
                         if (loopState.WasBreakCalled)
                         {

@@ -20,11 +20,11 @@ namespace ALinq
             {
                 await enumerable.ForEach(async state =>
                 {
-                    if ( await predicate(state.Item,(int)state.Index))
+                    if (await predicate(state.Item, (int)state.Index).ConfigureAwait(false))
                     {
-                        await producer.Yield(state.Item);
+                        await producer.Yield(state.Item).ConfigureAwait(false);
                     }
-                });
+                }).ConfigureAwait(false);
             });
         }
     }

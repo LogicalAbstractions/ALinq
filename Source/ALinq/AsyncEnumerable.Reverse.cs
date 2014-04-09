@@ -14,12 +14,12 @@ namespace ALinq
             {
                 var evaluatedSequence = new List<T>();
 #pragma warning disable 1998
-                await enumerable.ForEach(async item => evaluatedSequence.Add(item));
+                await enumerable.ForEach(async item => evaluatedSequence.Add(item)).ConfigureAwait(false);
 #pragma warning restore 1998
 
                 foreach (var item in ((IEnumerable<T>)evaluatedSequence).Reverse())
                 {
-                    await producer.Yield(item);
+                    await producer.Yield(item).ConfigureAwait(false);
                 }
             });
         }

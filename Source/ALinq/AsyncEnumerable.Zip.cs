@@ -22,9 +22,9 @@ namespace ALinq
                 {
                     while( doContinue )
                     {
-                        if (await enumerator1.MoveNext() && await enumerator2.MoveNext())
+                        if (await enumerator1.MoveNext().ConfigureAwait(false) && await enumerator2.MoveNext().ConfigureAwait(false))
                         {
-                            await producer.Yield(await merger(enumerator1.Current, enumerator2.Current));
+                            await producer.Yield(await merger(enumerator1.Current, enumerator2.Current).ConfigureAwait(false)).ConfigureAwait(false);
                         }
                         else
                         {

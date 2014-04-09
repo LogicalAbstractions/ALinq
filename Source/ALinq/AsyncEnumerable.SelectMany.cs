@@ -34,13 +34,13 @@ namespace ALinq
             {
                 await enumerable.ForEach(async state =>
                 {
-                    var collection = await collectionSelector(state.Item, (int)state.Index);
+                    var collection = await collectionSelector(state.Item, (int)state.Index).ConfigureAwait(false);
                     await collection.ForEach(async innerState =>
                     {
-                        var result = await resultSelector(state.Item, innerState.Item);
-                        await producer.Yield(result);
-                    });
-                });
+                        var result = await resultSelector(state.Item, innerState.Item).ConfigureAwait(false);
+                        await producer.Yield(result).ConfigureAwait(false);
+                    }).ConfigureAwait(false);
+                }).ConfigureAwait(false);
             });
         }
     }

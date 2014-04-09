@@ -8,13 +8,13 @@ namespace ALinq
         public static async Task<T> Last<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
-            return await First(enumerable.Reverse(), async item => true);
+            return await First(enumerable.Reverse(), async item => true).ConfigureAwait(false);
 #pragma warning restore 1998
         }
 
         public static async Task<T> Last<T>(this IAsyncEnumerable<T> enumerable, Func<T, Task<bool>> predicate)
         {
-            return await First(enumerable.Reverse(), predicate);
+            return await First(enumerable.Reverse(), predicate).ConfigureAwait(false);
         }
 
         public static Task<T> LastOrDefault<T>(this IAsyncEnumerable<T> enumerable)

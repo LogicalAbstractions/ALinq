@@ -14,7 +14,7 @@ namespace ALinq
         {
             return Create<T>(async producer =>
             {
-                await producer.Yield(value);
+                await producer.Yield(value).ConfigureAwait(false);
             });
         }
     }

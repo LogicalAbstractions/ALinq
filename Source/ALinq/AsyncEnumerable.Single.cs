@@ -8,7 +8,7 @@ namespace ALinq
         public static async Task<T> Single<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
-            return await Single(enumerable, async item => true);
+            return await Single(enumerable, async item => true).ConfigureAwait(false);
 #pragma warning restore 1998
         }
 
@@ -22,7 +22,7 @@ namespace ALinq
 
             await enumerable.ForEach(async state =>
             {
-                if (await predicate(state.Item))
+                if (await predicate(state.Item).ConfigureAwait(false))
                 {
                     counter++;
                     result = state.Item;
@@ -32,7 +32,7 @@ namespace ALinq
                         state.Break();
                     }
                 }
-            });
+            }).ConfigureAwait(false);
 
             if (counter == 0)
             {
@@ -50,7 +50,7 @@ namespace ALinq
         public static async Task<T> SingleOrDefault<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
-            return await SingleOrDefault(enumerable, async item => true);
+            return await SingleOrDefault(enumerable, async item => true).ConfigureAwait(false);
 #pragma warning restore 1998
         }
 
@@ -64,7 +64,7 @@ namespace ALinq
 
             await enumerable.ForEach(async state =>
             {
-                if (await predicate(state.Item))
+                if (await predicate(state.Item).ConfigureAwait(false))
                 {
                     counter++;
                     result = state.Item;
@@ -74,7 +74,7 @@ namespace ALinq
                         state.Break();
                     }
                 }
-            });
+            }).ConfigureAwait(false);
 
 
             if (counter == 1)

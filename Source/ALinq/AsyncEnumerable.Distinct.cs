@@ -23,10 +23,10 @@ namespace ALinq
                 {
                     if ( !aggregator.Contains(item))
                     {
-                        await producer.Yield(item);
+                        await producer.Yield(item).ConfigureAwait(false);
                         aggregator.Add(item);
                     }
-                });
+                }).ConfigureAwait(false);
             });
         }
     }

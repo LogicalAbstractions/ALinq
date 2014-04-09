@@ -14,7 +14,7 @@ namespace ALinq
             {
                 foreach (var item in enumerable)
                 {
-                    await producer.Yield(item);
+                    await producer.Yield(item).ConfigureAwait(false);
                 }
             });
         }
@@ -43,7 +43,7 @@ namespace ALinq
                 {
                     using (observable.Subscribe(converter))
                     {
-                        await converter.WaitForCompletion();
+                        await converter.WaitForCompletion().ConfigureAwait(false);
                     }
                 }
             });

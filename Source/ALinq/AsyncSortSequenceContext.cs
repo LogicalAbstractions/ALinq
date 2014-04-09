@@ -14,14 +14,14 @@ namespace ALinq
         {
             if (ChildContext != null)
             {
-                await ChildContext.Initialize(elements);
+                await ChildContext.Initialize(elements).ConfigureAwait(false);
             }
 
             keys = new TKey[elements.Length];
 
             for (var i = 0; i < keys.Length; i++)
             {
-                keys[i] = await keySelector(elements[i]);
+                keys[i] = await keySelector(elements[i]).ConfigureAwait(false);
             }
         }
 

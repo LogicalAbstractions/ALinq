@@ -8,7 +8,7 @@ namespace ALinq
         public static async Task<bool> Any<T>(this IAsyncEnumerable<T> enumerable)
         {
 #pragma warning disable 1998
-            return await Any(enumerable, async item => true);
+            return await Any(enumerable, async item => true).ConfigureAwait(false);
 #pragma warning restore 1998
         }
 
@@ -21,12 +21,12 @@ namespace ALinq
 
             await enumerable.ForEach(async state =>
             {
-                if (await predicate(state.Item))
+                if (await predicate(state.Item).ConfigureAwait(false))
                 {
                     result = true;
                     state.Break();
                 }
-            });
+            }).ConfigureAwait(false);
 
             return result;
         }

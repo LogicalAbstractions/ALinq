@@ -11,8 +11,8 @@ namespace ALinq
 
             return Create<T>(async producer =>
             {
-                await enumerable.ForEach(async item => await producer.Yield(item));
-                await otherEnumerable.ForEach(async item => await producer.Yield(item));
+                await enumerable.ForEach(async item => await producer.Yield(item)).ConfigureAwait(false);
+                await otherEnumerable.ForEach(async item => await producer.Yield(item)).ConfigureAwait(false);
             });
         }
     }

@@ -27,7 +27,7 @@ namespace ALinq
                 {
                     if (task != null)
                     {
-                        current = await task;
+                        current = await task.ConfigureAwait(false);
                         return true;
                     }
                 }

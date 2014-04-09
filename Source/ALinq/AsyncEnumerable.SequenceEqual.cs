@@ -8,7 +8,7 @@ namespace ALinq
     {
         public static async Task<bool> SequenceEqual<T>(this IAsyncEnumerable<T> enumerable1, IAsyncEnumerable<T> enumerable2)
         {
-            return await SequenceEqual<T>(enumerable1, enumerable2, EqualityComparer<T>.Default);
+            return await SequenceEqual<T>(enumerable1, enumerable2, EqualityComparer<T>.Default).ConfigureAwait(false);
         }
 
         public static async Task<bool> SequenceEqual<T>(this IAsyncEnumerable<T> enumerable1, IAsyncEnumerable<T> enumerable2, IEqualityComparer<T> comparer)
@@ -25,8 +25,8 @@ namespace ALinq
             {
                 while (true)
                 {
-                    var move1 = await enumerator1.MoveNext();
-                    var move2 = await enumerator2.MoveNext();
+                    var move1 = await enumerator1.MoveNext().ConfigureAwait(false);
+                    var move2 = await enumerator2.MoveNext().ConfigureAwait(false);
 
                     if (move1 && move2)
                     {

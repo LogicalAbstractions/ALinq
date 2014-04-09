@@ -22,7 +22,7 @@ namespace ALinq
                     result = state.Item;
                     found = true;
                 }
-            });
+            }).ConfigureAwait(false);
 
             if (found)
             {
@@ -49,7 +49,7 @@ namespace ALinq
                     result = state.Item;
                     found = true;
                 }
-            });
+            }).ConfigureAwait(false);
 
             if (found)
             {

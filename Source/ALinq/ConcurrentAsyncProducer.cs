@@ -10,7 +10,7 @@ namespace ALinq
      
         public async Task Yield(T item)
         {
-            await notificationFunc(item);
+            await notificationFunc(item).ConfigureAwait(false);
         }
 
         internal ConcurrentAsyncProducer(Func<T,Task> notificationFunc)

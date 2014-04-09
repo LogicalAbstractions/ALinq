@@ -10,8 +10,8 @@ namespace ALinq
             {
                 await enumerable.ForEach(async (object item) =>
                 {
-                    await producer.Yield((TOut)item);
-                });
+                    await producer.Yield((TOut)item).ConfigureAwait(false);
+                }).ConfigureAwait(false);
             });
         }
 
@@ -23,8 +23,8 @@ namespace ALinq
             {
                 await enumerable.ForEach(async (TIn item) =>
                 {
-                    await producer.Yield((TOut)(object)item);
-                });
+                    await producer.Yield((TOut)(object)item).ConfigureAwait(false);
+                }).ConfigureAwait(false);
             });
         }
     }

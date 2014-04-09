@@ -34,7 +34,7 @@ namespace ALinq
                 // Fill the inner set:
                 await inner.ForEach(async state =>
                 {
-                    var innerKey = await innerKeySelector(state.Item);
+                    var innerKey = await innerKeySelector(state.Item).ConfigureAwait(false);
                     if ( !innerDictionary.ContainsKey(innerKey))
                     {
                         List<TInner> innerList = null;
@@ -48,21 +48,21 @@ namespace ALinq
                             innerDictionary.Add(innerKey,innerList);
                         }
                     }
-                });
+                }).ConfigureAwait(false);
 
                 await outer.ForEach(async state =>
                 {
-                    var outerKey = await outerKeySelector(state.Item);
+                    var outerKey = await outerKeySelector(state.Item).ConfigureAwait(false);
                     List<TInner> innerList;
                     if (innerDictionary.TryGetValue(outerKey, out innerList))
                     {
                         foreach( var innerItem in innerList )
                         {
-                            var result = await resultSelector(state.Item, innerItem);
-                            await producer.Yield(result);
+                            var result = await resultSelector(state.Item, innerItem).ConfigureAwait(false);
+                            await producer.Yield(result).ConfigureAwait(false);
                         }
                     }
-                });
+                }).ConfigureAwait(false);
             });
         }
     }

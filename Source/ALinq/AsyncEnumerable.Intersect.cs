@@ -20,16 +20,16 @@ namespace ALinq
             {
                 var set = new HashSet<T>();
 #pragma warning disable 1998
-                await second.ForEach(async item => set.Add(item));
+                await second.ForEach(async item => set.Add(item)).ConfigureAwait(false);
 #pragma warning restore 1998
 
                 await first.ForEach(async item =>
                 {
                     if (set.Contains(item))
                     {
-                        await producer.Yield(item);
+                        await producer.Yield(item).ConfigureAwait(false);
                     }
-                });
+                }).ConfigureAwait(false);
             });
         }
     }

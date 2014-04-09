@@ -25,7 +25,7 @@ namespace ALinq
         {
             try
             {
-                var newValue = await valueBufferBlock.ReceiveAsync();
+                var newValue = await valueBufferBlock.ReceiveAsync().ConfigureAwait(false);
                 current = newValue;
                 return true;
             }
@@ -44,7 +44,7 @@ namespace ALinq
         {
             var producer = new ConcurrentAsyncProducer<T>(async item =>
             {
-                await valueBufferBlock.SendAsync(item);
+                await valueBufferBlock.SendAsync(item).ConfigureAwait(false);
             });
 
             producerFunc(producer).ContinueWith(t =>

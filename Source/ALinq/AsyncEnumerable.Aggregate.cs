@@ -30,10 +30,10 @@ namespace ALinq
 
             await enumerable.ForEach(async item =>
             {
-                accumulator = await aggregationFunc(accumulator, item);
-            });
+                accumulator = await aggregationFunc(accumulator, item).ConfigureAwait(false);
+            }).ConfigureAwait(false);
 
-            return await resultSelector(accumulator);
+            return await resultSelector(accumulator).ConfigureAwait(false);
         }
     }
 }

@@ -45,8 +45,8 @@ namespace ALinq
 
                 await source.ForEach(async item =>
                 {
-                    var key     = await keySelector(item);
-                    var element = await elementSelector(item);
+                    var key     = await keySelector(item).ConfigureAwait(false);
+                    var element = await elementSelector(item).ConfigureAwait(false);
 
                     List<TElement> groupList = null;
 
@@ -57,7 +57,7 @@ namespace ALinq
                     }
 
                     groupList.Add(element);
-                });
+                }).ConfigureAwait(false);
 
                 foreach( var group in dictionary)
                 {
@@ -66,11 +66,11 @@ namespace ALinq
                     {
                         foreach( var element in localGroup.Value)
                         {
-                            await groupProducer.Yield(element);
+                            await groupProducer.Yield(element).ConfigureAwait(false);
                         }
                     });
 
-                    await producer.Yield(grouping);
+                    await producer.Yield(grouping).ConfigureAwait(false);
                 }
             });
         }
@@ -118,8 +118,8 @@ namespace ALinq
 
                 await source.ForEach(async item =>
                 {
-                    var key = await keySelector(item);
-                    var element = await elementSelector(item);
+                    var key = await keySelector(item).ConfigureAwait(false);
+                    var element = await elementSelector(item).ConfigureAwait(false);
 
                     List<TElement> groupList = null;
 
@@ -130,13 +130,13 @@ namespace ALinq
                     }
 
                     groupList.Add(element);
-                });
+                }).ConfigureAwait(false);
 
                 foreach (var group in dictionary)
                 {
                     var localGroup = group;
-                    var result = await resultSelector(localGroup.Key, localGroup.Value.ToAsync());
-                    await producer.Yield(result);
+                    var result = await resultSelector(localGroup.Key, localGroup.Value.ToAsync()).ConfigureAwait(false);
+                    await producer.Yield(result).ConfigureAwait(false);
                 }
             });
         }

@@ -11,13 +11,13 @@ namespace ALinq
                                                                                                     Func<TSource, Task<TKey>> keySelector,
                                                                                                     Func<TSource, Task<TElement>> elementSelector)
         {
-            return await ToDictionary(source, keySelector, elementSelector, EqualityComparer<TKey>.Default);
+            return await ToDictionary(source, keySelector, elementSelector, EqualityComparer<TKey>.Default).ConfigureAwait(false);
         }
 
         public static async Task<IDictionary<TKey, TSource>> ToDictionary<TSource, TKey>(this IAsyncEnumerable<TSource> source,
                                                                                          Func<TSource, Task<TKey>> keySelector)
         {
-            return await ToDictionary(source, keySelector, EqualityComparer<TKey>.Default);
+            return await ToDictionary(source, keySelector, EqualityComparer<TKey>.Default).ConfigureAwait(false);
         }
 
         public static async Task<IDictionary<TKey, TSource>> ToDictionary<TSource, TKey>(this IAsyncEnumerable<TSource> source,
@@ -25,7 +25,7 @@ namespace ALinq
                                                                                                     IEqualityComparer<TKey> comparer)
         {
 #pragma warning disable 1998
-            return await ToDictionary(source, keySelector, async e => e, comparer);
+            return await ToDictionary(source, keySelector, async e => e, comparer).ConfigureAwait(false);
 #pragma warning restore 1998
         }
 
@@ -43,11 +43,11 @@ namespace ALinq
 
             await source.ForEach(async item =>
             {
-                var key     = await keySelector(item);
-                var value   = await elementSelector(item);
+                var key     = await keySelector(item).ConfigureAwait(false);
+                var value   = await elementSelector(item).ConfigureAwait(false);
 
                 result.Add(key,value);
-            });
+            }).ConfigureAwait(false);
 
             return result;
         }

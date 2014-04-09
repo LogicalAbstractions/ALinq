@@ -14,7 +14,7 @@ namespace ALinq
         {
             var sorter = new QuickSort<TElement>(source, context);
 
-            await sorter.PerformSort();
+            await sorter.PerformSort().ConfigureAwait(false);
 
             var result = new TElement[sorter.indexes.Length];
 
@@ -33,7 +33,7 @@ namespace ALinq
                 return;
             }
 
-            await context.Initialize(elements);
+            await context.Initialize(elements).ConfigureAwait(false);
 
             Sort(0, indexes.Length - 1);
         }

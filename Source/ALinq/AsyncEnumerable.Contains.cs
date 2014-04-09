@@ -8,7 +8,7 @@ namespace ALinq
     {
         public static async Task<bool> Contains<T>(this IAsyncEnumerable<T> enumerable, T item)
         {
-            return await Contains(enumerable, item, EqualityComparer<T>.Default);
+            return await Contains(enumerable, item, EqualityComparer<T>.Default).ConfigureAwait(false);
         }
 
         public static async Task<bool> Contains<T>(this IAsyncEnumerable<T> enumerable, T item, IEqualityComparer<T> comparer)
@@ -27,7 +27,7 @@ namespace ALinq
                     found = true;
                     state.Break();
                 }
-            });
+            }).ConfigureAwait(false);
 
             return found;
         }

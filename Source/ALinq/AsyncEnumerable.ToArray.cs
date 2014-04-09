@@ -9,7 +9,7 @@ namespace ALinq
     {
         public static async Task<T[]> ToArray<T>(this IAsyncEnumerable<T> enumerable )
         {
-            var list = await ToList(enumerable);
+            var list = await ToList(enumerable).ConfigureAwait(false);
             return list.ToArray();
         }
     }

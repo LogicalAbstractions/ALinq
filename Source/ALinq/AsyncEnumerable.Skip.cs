@@ -16,9 +16,9 @@ namespace ALinq
                 {
                     if (state.Index >= count)
                     {
-                        await producer.Yield(state.Item);
+                        await producer.Yield(state.Item).ConfigureAwait(false);
                     }
-                });
+                }).ConfigureAwait(false);
             });
         }
 
@@ -38,16 +38,16 @@ namespace ALinq
             {
                 await enumerable.ForEach(async state =>
                 {
-                    if (!doYield && !await predicate(state.Item, state.Index))
+                    if (!doYield && !await predicate(state.Item, state.Index).ConfigureAwait(false))
                     {
                         doYield = true;
                     }
 
                     if (doYield)
                     {
-                        await producer.Yield(state.Item);
+                        await producer.Yield(state.Item).ConfigureAwait(false);
                     }
-                });
+                }).ConfigureAwait(false);
             });
         }
     }

@@ -21,11 +21,11 @@ namespace ALinq
         {
             return AsyncEnumerable.Create<TElement>(async producer =>
             {
-                var result = await QuickSort<TElement>.Sort(await source.ToList(),CreateContext(null));
+                var result = await QuickSort<TElement>.Sort(await source.ToList().ConfigureAwait(false), CreateContext(null)).ConfigureAwait(false);
 
                 foreach( var element in result )
                 {
-                    await producer.Yield(element);
+                    await producer.Yield(element).ConfigureAwait(false);
                 }
             });
         }
