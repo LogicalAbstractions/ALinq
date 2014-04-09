@@ -9,8 +9,8 @@
     <projectUrl>https://github.com/BernhardGlueck/ALinq</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>0.1 Alpha initial release</releaseNotes>
-    <copyright>Copyright 2012 by Bernhard Glueck</copyright>
+    <releaseNotes>0.5 Beta</releaseNotes>
+    <copyright>Copyright 2012-2014 by Bernhard Glueck</copyright>
     <tags>C# LINQ Async Asynchronous</tags>
   </metadata>
 </package>
